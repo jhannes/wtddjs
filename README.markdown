@@ -48,4 +48,7 @@ Problems encountered:
   * Workaround: Submit phantomjs.binary.path as desiredCapabilities
   * Submitted patch to Selenium team: https://code.google.com/p/selenium/issues/detail?id=7514
 
+Further work:
+=============
 
+Check out alternative webdriver API at https://github.com/admc/wd
