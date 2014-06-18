@@ -1,7 +1,18 @@
 var selenium = require('selenium-standalone');
 var server = selenium({ stdio: 'pipe' }, ["-debug"]);
+server.stdout.setEncoding("utf8");
+server.stdout.on('data', function(output) {
+  console.log(output);
+});
 
-var client = require('webdriverjs').remote({});
+var client = require('webdriverjs')
+  .remote({
+    desiredCapabilities: {
+      browserName: 'phantomjs',
+      "phantomjs.binary.path": __dirname + "/../node_modules/.bin/phantomjs.cmd"
+    },
+    logLevel: ""
+  });
 
 var expect = require('chai').expect;
 
@@ -13,7 +24,8 @@ describe("web application", function() {
   });
 
   after(function(done) {
-    client.end(done);
+    client.end();
+    done();
   })
 
   it("has correct title on front page", function(done) {

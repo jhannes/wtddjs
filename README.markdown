@@ -25,3 +25,13 @@ Development log
 6. npm install selenium-standalone webdriverjs chai
 7. Create test/simpleWebTest.js
 
+
+
+Problems encountered:
+=====================
+
+* Selenium doesn't correctly fork PhantomJS on Windows
+  * Workaround: Submit phantomjs.binary.path as desiredCapabilities
+  * Submitted patch to Selenium team: https://code.google.com/p/selenium/issues/detail?id=7514
+
+
