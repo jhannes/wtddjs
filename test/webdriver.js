@@ -20,16 +20,29 @@ var startSeleniumServer = function(done) {
 
 var startWebDriver = function(done) {
   var desiredCapabilities = {
-    browserName: 'phantomjs',
+    browserName: process.env.BROWSER || 'phantomjs',
   };
-  if (/^win/.test(process.platform) && desiredCapabilities.browserName === "phantomjs") {
-    desiredCapabilities["phantomjs.binary.path"] = __dirname + "/../node_modules/.bin/phantomjs.cmd";
+  if (desiredCapabilities.browserName === "phantomjs") {
+    if (/^win/.test(process.platform)) {
+      // Selenium 2.42.0 bug:
+      //  Selenium tries to execute phantomjs instead of phantomjs.cmd on Windows
+      desiredCapabilities["phantomjs.binary.path"] = __dirname + "/../node_modules/.bin/phantomjs.cmd";
+    }
   }
   var client = require('webdriverjs').remote({
     desiredCapabilities: desiredCapabilities,
     logLevel: (DEBUG ? "debug" : "")
   });
   startSeleniumServer(done);
+
+  if (desiredCapabilities.browserName === "phantomjs") {
+    // PhantomJs 1.9.7-8 bug:
+    //   Object #<Object> has no method 'session'
+    client.end = function(done) {
+      done();
+    };
+  }
+
   return client;
 }
 

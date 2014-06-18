@@ -4,12 +4,12 @@ var expect = require('chai').expect;
 describe("web application", function() {
 
   before(function(done) {
-    this.timeout(5000);
+    this.timeout(15000);
     client = webdriver(done);
   });
 
-  after(function() {
-    client.end();
+  after(function(done) {
+    client.end(done);
   })
 
   it("has correct title on front page", function(done) {
