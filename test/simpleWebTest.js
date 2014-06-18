@@ -19,4 +19,17 @@ describe("web application", function() {
     });
   });
 
+  it("clicks menu item", function(done) {
+    client.click("#showMore", function(err) {
+      expect(err).to.be.null;
+      client.waitFor("#results div", 1000, function(err) {
+        expect(err).to.be.null;
+        client.getText("#results div", function(err, text) {
+          expect(text).to.have.string("Here's more");
+          done();
+        });
+      });
+    });
+  });
+
 });
