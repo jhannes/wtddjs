@@ -14,6 +14,19 @@ end-to-end.
 This project explores how to get the whole set of tools
 up and running for a NodeJs-based stack.
 
+How to use
+==========
+1. Check out the code
+2. Run "npm test" to run the test
+3. Run "npm start" to start the server
+
+Check out the test at test/simpleWebTest.js and the server
+at app.js.
+
+Set environment variable URL to test to a manually deployed server
+instead of the embedded server.
+
+
 Development log
 ===============
 
@@ -24,7 +37,8 @@ Development log
 5. npm install mocha
 6. npm install selenium-standalone webdriverjs chai
 7. Create test/simpleWebTest.js
-
+8. npm install phantomjs
+9. Change the test to start up the server
 
 
 Problems encountered:

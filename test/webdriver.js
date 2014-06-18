@@ -33,9 +33,24 @@ var startWebDriver = function(done) {
   return client;
 }
 
+var startAppServer = function(done) {
+  if (process.env.URL) {
+    return done(process.env.URL);
+  }
+
+  var app = require('../app');
+  var server = app.listen(0, function() {
+    var port = server.address().port;
+    done("http://localhost:" + port + "/");
+  });
+};
+
 module.exports = function(done) {
   var client = startWebDriver(function() {
-    client.init().url("http://localhost:3000", done)
+    startAppServer(function(url) {
+      console.log("Running tests with " + url);
+      client.init().url(url, done);
+    });
   });
   return client;
 };
