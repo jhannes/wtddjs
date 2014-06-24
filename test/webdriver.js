@@ -37,9 +37,11 @@ var startWebDriver = function(done) {
 
   if (desiredCapabilities.browserName === "phantomjs") {
     // PhantomJs 1.9.7-8 bug:
-    //   Object #<Object> has no method 'session'
+    //   end doesn't call back
+    client.oldEnd = client.end;
     client.end = function(done) {
-      done();
+      this.oldEnd();
+      setTimeout(done, 200);
     };
   }
 
